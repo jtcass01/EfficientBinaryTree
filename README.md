@@ -6,4 +6,4 @@ The program begins with a binary heap to develop the most efficient binary tree.
 
 For use, I imagine a state (node) will be edited throughout the program and then used to replace the current value within the tree.  This means it is important for the programmer to use a variable to keep track of the oldest data point within the tree and replace at that node.
 
-I have written this system in both Python and C for multiple embedded system applications.  Please feel free to reach out to me if you have any questions.
+I have developed this system in both Python and C for multiple embedded system applications.  Please feel free to reach out to me if you have any questions.
