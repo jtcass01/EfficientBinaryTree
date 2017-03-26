@@ -6,7 +6,8 @@ import tkinter as tk
 
 class GUIBTree:
     #===== Initialization =====
-    def __init__(self, size):
+    def __init__(self, size, size_factor=1.0):
+        self.size_factor = size_factor
         self.root = None
         binaryHeap = Heap(size)
 
@@ -18,7 +19,7 @@ class GUIBTree:
 
     def add(self, key):
         if(self.root == None):
-            self.root = GUINode(key)
+            self.root = GUINode(key, size_factor = self.size_factor, use="btree")
         else:
             self._add(key, self.root)
 
@@ -27,28 +28,28 @@ class GUIBTree:
             if(node.getLeftChild() != None):
                 self._add(key, node.getLeftChild())
             else:
-                node.setLeftChild(GUINode(key))
+                node.setLeftChild(GUINode(key, size_factor = self.size_factor, use="btree"))
         else:
             if(node.getRightChild() != None):
                 self._add(key, node.getRightChild())
             else:
-                node.setRightChild(GUINode(key))
+                node.setRightChild(GUINode(key, size_factor = self.size_factor, use="btree"))
 
     def draw_self(self, canvas, canvas_width, canvas_height):
         canvas.delete("all")
-        self.draw_branch(canvas, self.root, canvas_width/2, 10)
+        self.draw_branch(canvas, self.root, canvas_width/2, 30)
 
     def draw_branch(self, canvas, node, x, y):
-        xSpacing = 10
-        ySpacing = 25
+        xSpacing = 10 * self.size_factor
+        ySpacing = 35 * self.size_factor
         
         if node != None:
             self.draw_node(canvas, node, x, y)
             if(node.getLeftChild() != None):
-                self.draw_branch(canvas, node.getLeftChild(), x - (node.getKey() - node.getLeftChild().getKey())*25, y + ySpacing)
+                self.draw_branch(canvas, node.getLeftChild(), x - (node.getKey() - node.getLeftChild().getKey())*25*self.size_factor, y + ySpacing)
                 node.connect_the_dots(node.getLeftChild(), canvas)
             if(node.getRightChild() != None):
-                self.draw_branch(canvas, node.getRightChild(), x + (node.getRightChild().getKey() - node.getKey())*25, y + ySpacing)
+                self.draw_branch(canvas, node.getRightChild(), x + (node.getRightChild().getKey() - node.getKey())*25*self.size_factor, y + ySpacing)
                 node.connect_the_dots(node.getRightChild(), canvas)
 
     def draw_node(self, canvas, node, x, y):
